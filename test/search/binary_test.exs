@@ -4,7 +4,7 @@ defmodule Search.BinaryTest do
   test "when element exists in the list, it returns the element" do
     list = [1, 2, 3, 4, 5, 6, 7]
 
-    result = Search.Bynary.search(list, 4)
+    result = Search.Binary.search(list, 4)
 
     assert result == 4
   end
@@ -12,7 +12,7 @@ defmodule Search.BinaryTest do
   test "when element don't exist in the list, it return nil" do
     list = [1, 2, 3, 4, 5, 6, 7]
 
-    result = Search.Bynary.search(list, 8)
+    result = Search.Binary.search(list, 8)
 
     assert result, nil
   end
@@ -20,7 +20,7 @@ defmodule Search.BinaryTest do
   test "when element is a String, it returns the element" do
     list = ["a", "b", "c", "d"]
 
-    result = Search.Bynary.search(list, "c")
+    result = Search.Binary.search(list, "c")
 
     assert result, "c"
   end
@@ -28,7 +28,7 @@ defmodule Search.BinaryTest do
   test "when element is duplicated, it returns the element" do
     list = [1, 2, 3, 3, 3, 4, 5, 6, 7]
 
-    result = Search.Bynary.search(list, 3)
+    result = Search.Binary.search(list, 3)
 
     assert result, 3
   end
@@ -36,7 +36,7 @@ defmodule Search.BinaryTest do
   test "when receive an empty list, return nil" do
     list = []
 
-    result = Search.Bynary.search(list, 3)
+    result = Search.Binary.search(list, 3)
 
     assert result, nil
   end
