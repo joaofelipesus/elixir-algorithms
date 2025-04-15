@@ -2,51 +2,54 @@ defmodule Search.Binary do
   # handle empty list
   def search([], _), do: nil
 
-  # stop condition, when final element is equal to the target element
-  def search([final_element], target_element) when final_element == target_element,
-    do: final_element
-
-  # stop condition, when final element is different of the target element
-  def search([final_element], target_element) when final_element != target_element,
-    do: nil
-
   def search(list, target_value) do
-    list_size = length(list)
-    split_index = round(list_size / 2)
-    compair_element = Enum.at(list, split_index)
+    initial_index = 0
+    final_index = length(list)
+    split_index = floor(final_index / 2)
+    current_element = Enum.at(list, split_index)
 
-    next_group = split_next_group(list, compair_element, target_value)
-
-    search(next_group, target_value)
+    search(list, target_value, initial_index, final_index, split_index, current_element)
   end
 
-  # when compair element is the target element then stop the loop.
-  defp split_next_group(_list, compair_element, target_element)
-       when compair_element == target_element do
-    [compair_element]
+  # when current element matches with the target element.
+  defp search(_list, target_value, _initial_index, _final_index, split_index, current_element)
+       when current_element == target_value do
+    split_index
   end
 
-  # when compair number is bigger than target_element.
-  defp split_next_group(list, compair_element, target_element)
-       when target_element > compair_element do
-    list_size = length(list)
-    split_index = round(list_size / 2)
-
-    case rem(length(list), 2) do
-      0 -> Enum.slice(list, split_index - 1, length(list) - 1)
-      _ -> Enum.slice(list, split_index, length(list) - 1)
+  # break condition, when there is only one element to match
+  defp search(_list, target_value, initial_index, final_index, split_index, current_element)
+       when initial_index + 1 >= final_index do
+    case current_element == target_value do
+      true -> split_index
+      false -> nil
     end
   end
 
-  # when compair number is smaller than target_element.
-  defp split_next_group(list, compair_element, target_element)
-       when target_element < compair_element do
-    list_size = length(list)
-    split_index = round(list_size / 2)
+  # when current element is bigger than target_element.
+  defp search(list, target_value, initial_index, _final_index, split_index, current_element)
+       when current_element > target_value do
+    final_index = split_index
 
-    case rem(length(list), 2) do
-      0 -> Enum.slice(list, 0, split_index - 1)
-      _ -> Enum.slice(list, 0, split_index)
-    end
+    {split_index, current_element} = calc_split_index_and_fetch_element(list, initial_index, final_index)
+
+    search(list, target_value, initial_index, final_index, split_index, current_element)
+  end
+
+  # when current element is bigger than target_element.
+  defp search(list, target_value, _initial_index, final_index, split_index, current_element)
+       when current_element < target_value do
+    initial_index = split_index
+
+    {split_index, current_element} = calc_split_index_and_fetch_element(list, initial_index, final_index)
+
+    search(list, target_value, initial_index, final_index, split_index, current_element)
+  end
+
+  defp calc_split_index_and_fetch_element(list, initial_index, final_index) do
+    split_index = floor((final_index - initial_index) / 2) + initial_index
+    current_element = Enum.at(list, split_index)
+
+    {split_index, current_element}
   end
 end
