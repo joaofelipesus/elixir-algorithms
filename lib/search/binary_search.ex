@@ -31,7 +31,8 @@ defmodule Search.Binary do
        when current_element > target_value do
     final_index = split_index
 
-    {split_index, current_element} = calc_split_index_and_fetch_element(list, initial_index, final_index)
+    {split_index, current_element} =
+      calc_split_index_and_fetch_element(list, initial_index, final_index)
 
     search(list, target_value, initial_index, final_index, split_index, current_element)
   end
@@ -41,7 +42,8 @@ defmodule Search.Binary do
        when current_element < target_value do
     initial_index = split_index
 
-    {split_index, current_element} = calc_split_index_and_fetch_element(list, initial_index, final_index)
+    {split_index, current_element} =
+      calc_split_index_and_fetch_element(list, initial_index, final_index)
 
     search(list, target_value, initial_index, final_index, split_index, current_element)
   end
