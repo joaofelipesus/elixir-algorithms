@@ -8,7 +8,9 @@ defmodule Search.BiggerNumber do
       case current_element > acc do
         true ->
           current_element
-        false -> acc
+
+        false ->
+          acc
       end
     end)
   end
